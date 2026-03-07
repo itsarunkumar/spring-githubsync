@@ -19,8 +19,8 @@ public class GithubSchedulerService {
         this.userRepository = userRepository;
     }
 
-    @Scheduled(fixedRate = 3600000) // every 1 hour
-//    @Scheduled(fixedRate = 10000)
+//    @Scheduled(fixedRate = 3600000) // every 1 hour
+    @Scheduled(fixedRate = 100000)
     public void syncGithubEvents() {
 
         List<User> users = userRepository.findAll();

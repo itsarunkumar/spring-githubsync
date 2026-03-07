@@ -56,20 +56,14 @@ public class GithubApiService {
             if(eventRepository.existsByGithubEventId(eventId)) {
                 continue;
             }
-
-//            GithubEvent githubEvent = new GithubEvent();
             githubEvent.setGithubEventId(eventId);
             githubEvent.setEventType((String) event.get("type"));
-
-//            Map repo = (Map) event.get("repo");
             githubEvent.setRepoName((String) repo.get("name"));
 
             githubEvent.setCreatedAt(LocalDateTime.now());
             githubEvent.setUser(user);
 
             eventRepository.save(githubEvent);
-
-//            eventRepository.save(githubEvent);
         }
     }
 }
