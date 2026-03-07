@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface GithubEventRepository extends JpaRepository<GithubEvent,Long> {
     List<GithubEvent> findByUserId(Long userId);
+    boolean existsByGithubEventId(String githubEventId);
 }

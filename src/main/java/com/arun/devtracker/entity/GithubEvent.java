@@ -1,10 +1,17 @@
 package com.arun.devtracker.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "github_events")
+@Getter
+@Setter
+@AllArgsConstructor
 public class GithubEvent {
 
     @Id
@@ -12,6 +19,9 @@ public class GithubEvent {
     private Long id;
 
     private String eventType;
+
+    @Column(unique = true)
+    private String githubEventId;
 
     private String repoName;
 
@@ -23,15 +33,20 @@ public class GithubEvent {
 
     public GithubEvent() {}
 
-    public GithubEvent(String eventType, String repoName, LocalDateTime createdAt, User user) {
+    public GithubEvent(String eventType, String repoName, LocalDateTime createdAt, User user , String githubEventId) {
         this.eventType = eventType;
         this.repoName = repoName;
         this.createdAt = createdAt;
         this.user = user;
+        this.githubEventId = githubEventId;
     }
 
     public Long getId() {
         return id;
+    }
+
+    public String setGithubEventId(String githubEventId){
+       return this.githubEventId = githubEventId;
     }
 
     public String getEventType() {

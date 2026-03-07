@@ -31,7 +31,8 @@ public class GithubApiService {
 
         List<Map> events = webClient
                 .get()
-                .uri("https://api.github.com/users/" + username + "/events")
+                .uri("https://api.github.com/users/{username}/events", username)
+                .header("User-Agent", "devtracker-app")
                 .retrieve()
                 .bodyToFlux(Map.class)
                 .collectList()
@@ -50,7 +51,25 @@ public class GithubApiService {
             githubEvent.setCreatedAt(LocalDateTime.now());
             githubEvent.setUser(user);
 
+            String eventId = (String) event.get("id");
+
+            if(eventRepository.existsByGithubEventId(eventId)) {
+                continue;
+            }
+
+//            GithubEvent githubEvent = new GithubEvent();
+            githubEvent.setGithubEventId(eventId);
+            githubEvent.setEventType((String) event.get("type"));
+
+//            Map repo = (Map) event.get("repo");
+            githubEvent.setRepoName((String) repo.get("name"));
+
+            githubEvent.setCreatedAt(LocalDateTime.now());
+            githubEvent.setUser(user);
+
             eventRepository.save(githubEvent);
+
+//            eventRepository.save(githubEvent);
         }
     }
 }
