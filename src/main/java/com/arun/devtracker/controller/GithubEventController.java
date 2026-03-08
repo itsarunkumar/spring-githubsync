@@ -1,5 +1,6 @@
 package com.arun.devtracker.controller;
 
+import com.arun.devtracker.dto.GithubEventDTO;
 import com.arun.devtracker.entity.GithubEvent;
 import com.arun.devtracker.service.GithubEventService;
 import org.springframework.web.bind.annotation.*;
@@ -22,7 +23,8 @@ public class GithubEventController {
     }
 
     @GetMapping("/user/{userId}")
-    public List<GithubEvent> getUserEvents(@PathVariable Long userId) {
-        return service.getEventsByUser(userId);
+    public List<GithubEventDTO> getUserEvents(@PathVariable Long userId) {
+        List<GithubEvent> events = service.getEventsByUser(userId);
+        return service.convertToDtoList(events);
     }
 }
